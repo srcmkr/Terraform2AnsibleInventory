@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Terraform2AnsibleInventory", "Terraform2AnsibleInventory\Terraform2AnsibleInventory.csproj", "{88D726C7-4E0B-4026-8831-92C3D27915F3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{88D726C7-4E0B-4026-8831-92C3D27915F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88D726C7-4E0B-4026-8831-92C3D27915F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88D726C7-4E0B-4026-8831-92C3D27915F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88D726C7-4E0B-4026-8831-92C3D27915F3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {490F27D8-3DB1-47B7-9D05-657096A49000}
+	EndGlobalSection
+EndGlobal
