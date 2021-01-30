@@ -14,7 +14,7 @@ namespace Terraform2AnsibleInventory
 
         public void PreflightCheck(string[] args)
         {
-            if (string.IsNullOrEmpty(args[0]))
+            if (args.Length == 0 || string.IsNullOrEmpty(args[0]))
             {
                 PreflightCheck(new string[] { tfstateFile });
                 return;
