@@ -11,40 +11,41 @@ namespace Terraform2AnsibleInventory
     {
         private string tfstateFile = "terraform.tfstate";
         private RootObject RootObject { get; set; }
+        public StringBuilder sb {get;set; }
 
-        public void PreflightCheck(string[] args)
+        public bool PreflightCheck(string inputFile)
         {
-            if (args.Length == 0 || string.IsNullOrEmpty(args[0]))
+            if (System.IO.File.Exists(inputFile))
             {
-                PreflightCheck(new string[] { tfstateFile });
-                return;
-            }
-
-            if (System.IO.File.Exists(args[0]))
-            {
-                tfstateFile = args[0];
+                tfstateFile = inputFile;
+                return true;
             }
             else
             {
-                throw new Exception("Please set full path incl. terraform.tfstate as parameter if not in current work folder.");
+                Console.WriteLine("Please set full path incl. terraform.tfstate as parameter if not in current work folder.");
+                return false;
             }
         }
 
-        public void LoadJson()
+        public bool LoadJson()
         {
             try
             {
                 RootObject = JsonConvert.DeserializeObject<RootObject>(System.IO.File.ReadAllText(tfstateFile));
+                return true;
             }
-            catch (Exception ex)
+            catch
             {
-                throw new Exception("terraform.tfstate is invalid or could not be read.", ex);
+                Console.WriteLine("terraform.tfstate is invalid or could not be read.");
+                return false;
             }
         }
 
-        public void SaveToFile()
+        public bool SaveToFile(string fileName)
         {
             var tags = new List<Tag>();
+            sb = new StringBuilder();
+            sb.Clear();
 
             foreach (var resource in RootObject.Resources.Where(c => c.Type.ToLower() == "hcloud_server"))
             {
@@ -80,7 +81,7 @@ namespace Terraform2AnsibleInventory
                 }
             }
 
-            var sb = new StringBuilder();
+            
             foreach (var tag in tags)
             {
                 var cleanLabel = new string(tag.TagName.Where(char.IsLetter).ToArray());
@@ -94,11 +95,13 @@ namespace Terraform2AnsibleInventory
             }
             try
             {
-                System.IO.File.WriteAllText("ansible_hosts", sb.ToString());
+                System.IO.File.WriteAllText(fileName, sb.ToString());
+                return true;
             }
-            catch (Exception ex)
+            catch
             {
-                throw new Exception("Cannot write ansible_hosts to current directory. Aborted.", ex);
+                Console.WriteLine("Cannot write ansible_hosts to current directory. Aborted.");
+                return false;
             }
 
         }
